@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Менеджер Кодов</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-primary: #f5f5f7;
@@ -24,12 +20,11 @@
             --shadow-large: 0 24px 80px rgba(0, 0, 0, 0.12);
             --blur: blur(20px);
             --radius-medium: 14px;
-            --radius-large: 20px;
             --radius-xl: 28px;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
             background: var(--bg-primary);
             min-height: 100vh;
             color: var(--text-primary);
@@ -37,12 +32,8 @@
 
         .background {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: -1;
-            overflow: hidden;
         }
 
         .blob {
@@ -54,28 +45,22 @@
         }
 
         .blob-1 {
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            top: -200px;
-            left: -100px;
+            width: 600px; height: 600px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: -200px; left: -100px;
         }
 
         .blob-2 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            top: 50%;
-            right: -150px;
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            top: 50%; right: -150px;
             animation-delay: -5s;
         }
 
         .blob-3 {
-            width: 450px;
-            height: 450px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            bottom: -100px;
-            left: 30%;
+            width: 450px; height: 450px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            bottom: -100px; left: 30%;
             animation-delay: -10s;
         }
 
@@ -99,7 +84,6 @@
         .glass-panel {
             background: var(--bg-glass);
             backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
             border-radius: var(--radius-xl);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-medium);
@@ -123,16 +107,14 @@
         .panel-title {
             font-size: 22px;
             font-weight: 700;
-            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
         .panel-title-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, #5856d6 100%);
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, var(--accent), #5856d6);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -162,6 +144,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            overflow-y: auto;
         }
 
         .input-group {
@@ -175,7 +158,6 @@
             font-weight: 600;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .input-field {
@@ -185,66 +167,76 @@
             padding: 14px 18px;
             font-size: 15px;
             font-weight: 500;
-            color: var(--text-primary);
             outline: none;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .input-field:focus {
             border-color: var(--accent);
             background: white;
-            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15), var(--shadow-medium);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
             transform: scale(1.01);
         }
 
-        .input-field::placeholder {
-            color: var(--text-secondary);
-            font-weight: 400;
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
         }
 
-        .template-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .template-btn {
-            flex: 1;
+        .preset-btn {
             background: rgba(255, 255, 255, 0.6);
             border: 2px solid transparent;
             border-radius: var(--radius-medium);
-            padding: 14px 16px;
+            padding: 20px 16px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 8px;
             font-size: 14px;
             font-weight: 600;
-            color: var(--text-primary);
         }
 
-        .template-btn:hover {
+        .preset-btn:hover {
             background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-medium);
-            border-color: var(--accent);
         }
 
-        .editor-container {
-            flex: 1;
+        .preset-btn.active {
+            border-color: var(--accent);
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .preset-btn-icon { font-size: 28px; }
+
+        .preset-fields {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-medium);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .preset-fields.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .callback-editor {
             background: #1e1e1e;
             border-radius: var(--radius-medium);
             overflow: hidden;
-            box-shadow: var(--shadow-medium);
-            min-height: 350px;
+            min-height: 200px;
         }
 
-        #monaco-editor {
-            width: 100%;
-            height: 100%;
-        }
+        #monaco-editor { width: 100%; height: 200px; }
 
         .action-buttons {
             display: flex;
@@ -270,7 +262,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, #5856d6 100%);
+            background: linear-gradient(135deg, var(--accent), #5856d6);
             color: white;
             box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
         }
@@ -278,10 +270,6 @@
         .btn-primary:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(-1px) scale(0.98);
         }
 
         .btn-secondary {
@@ -304,26 +292,12 @@
             flex: 1;
             padding: 16px;
             overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        .codes-list::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .codes-list::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .codes-list::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 100px;
         }
 
         .code-card {
             background: rgba(255, 255, 255, 0.7);
             border-radius: var(--radius-medium);
-            padding: 18px;
+            padding: 16px;
             margin-bottom: 12px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -333,28 +307,39 @@
 
         .code-card:hover {
             background: rgba(255, 255, 255, 0.9);
-            transform: translateX(-4px) scale(1.01);
+            transform: translateX(-4px);
             box-shadow: var(--shadow-medium);
             border-color: rgba(0, 122, 255, 0.2);
-        }
-
-        .code-card.selected {
-            border-color: var(--accent);
-            background: rgba(0, 122, 255, 0.06);
         }
 
         .code-card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 6px;
         }
 
         .code-name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            color: var(--text-primary);
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            letter-spacing: 0.5px;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .code-type {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .code-type.badge { background: rgba(88, 86, 214, 0.15); color: #5856d6; }
+        .code-type.coins { background: rgba(255, 204, 0, 0.2); color: #997a00; }
+        .code-type.callback { background: rgba(52, 199, 89, 0.15); color: #34c759; }
+
+        .code-details {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
         .code-actions {
@@ -363,18 +348,13 @@
             top: 50%;
             transform: translateY(-50%) scale(0.8);
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s;
         }
 
-        .code-card:hover .code-actions,
-        .code-card.selected .code-actions {
-            opacity: 1;
-            transform: translateY(-50%) scale(1);
-        }
+        .code-card:hover .code-actions { opacity: 1; transform: translateY(-50%) scale(1); }
 
         .delete-btn {
-            width: 36px;
-            height: 36px;
+            width: 32px; height: 32px;
             border: none;
             background: var(--danger);
             color: white;
@@ -383,46 +363,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+            transition: all 0.3s;
         }
 
-        .delete-btn:hover {
-            transform: scale(1.15) rotate(90deg);
-            box-shadow: 0 6px 20px rgba(255, 59, 48, 0.4);
-        }
+        .delete-btn:hover { transform: scale(1.15) rotate(90deg); }
 
         .empty-state {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 60px 40px;
             text-align: center;
         }
 
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .empty-state-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .empty-state-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
+        .empty-state-icon { font-size: 64px; margin-bottom: 20px; opacity: 0.5; }
+        .empty-state-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
 
         .toast-container {
             position: fixed;
-            top: 24px;
-            right: 24px;
+            top: 24px; right: 24px;
             z-index: 1000;
             display: flex;
             flex-direction: column;
@@ -432,7 +391,6 @@
         .toast {
             background: var(--bg-glass);
             backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
             border-radius: var(--radius-medium);
             padding: 16px 20px;
             display: flex;
@@ -441,55 +399,26 @@
             box-shadow: var(--shadow-large);
             border: 1px solid var(--border-color);
             animation: toastIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            min-width: 300px;
+            min-width: 280px;
         }
 
         .toast.success { border-left: 4px solid var(--success); }
         .toast.error { border-left: 4px solid var(--danger); }
 
-        .toast-icon { font-size: 20px; }
-
-        .toast-content { flex: 1; }
-
-        .toast-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .toast-message {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
         @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateX(100px) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        .toast.removing {
-            animation: toastOut 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
+        .toast.removing { animation: toastOut 0.4s forwards; }
 
         @keyframes toastOut {
-            to {
-                opacity: 0;
-                transform: translateX(100px) scale(0.8);
-            }
+            to { opacity: 0; transform: translateX(100px); }
         }
 
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(8px);
             display: flex;
@@ -498,82 +427,44 @@
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal {
             background: var(--bg-glass);
             backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
             border-radius: var(--radius-xl);
             padding: 32px;
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
             box-shadow: var(--shadow-large);
             border: 1px solid var(--border-color);
-            transform: scale(0.9) translateY(20px);
+            transform: scale(0.9);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-        }
+        .modal-overlay.active .modal { transform: scale(1); }
 
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-
-        .modal-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-        }
-
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; text-align: center; }
+        .modal-text { font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 24px; }
+        .modal-actions { display: flex; gap: 12px; }
         .modal-actions .btn { flex: 1; }
 
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger) 0%, #ff6b6b 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(255, 59, 48, 0.3);
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 24px rgba(255, 59, 48, 0.4);
-        }
-
-        .config-section {
-            margin-bottom: 20px;
-        }
+        .btn-danger { background: linear-gradient(135deg, var(--danger), #ff6b6b); color: white; }
+        .config-section { margin-bottom: 16px; }
 
         .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 20px; height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             display: none;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .btn.loading { pointer-events: none; opacity: 0.8; }
         .btn.loading .btn-text { display: none; }
@@ -592,36 +483,20 @@
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background: var(--success);
             border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .status-indicator.error {
-            background: rgba(255, 59, 48, 0.1);
-            color: var(--danger);
-        }
-
-        .status-indicator.error .status-dot {
-            background: var(--danger);
-            animation: none;
-        }
+        .status-indicator.error { background: rgba(255, 59, 48, 0.1); color: var(--danger); }
+        .status-indicator.error .status-dot { background: var(--danger); animation: none; }
 
         @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .editor-section, .codes-panel {
-                height: auto;
-                min-height: 500px;
-            }
+            .container { grid-template-columns: 1fr; }
+            .editor-section, .codes-panel { height: auto; min-height: 500px; }
         }
     </style>
 </head>
@@ -637,10 +512,7 @@
     <div class="modal-overlay" id="deleteModal">
         <div class="modal">
             <div class="modal-title">🗑️ Удалить код?</div>
-            <div class="modal-text">
-                Вы уверены что хотите удалить <strong id="deleteCodeName"></strong>?
-                Это действие нельзя отменить.
-            </div>
+            <div class="modal-text">Удалить <strong id="deleteCodeName"></strong>?</div>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeDeleteModal()">Отмена</button>
                 <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">
@@ -654,23 +526,22 @@
     <div class="modal-overlay" id="configModal">
         <div class="modal">
             <div class="modal-title">⚙️ Настройки GitHub</div>
-            <div class="modal-text">Введите данные для доступа к репозиторию</div>
             <div class="config-section">
                 <div class="input-group">
-                    <label class="input-label">Владелец репозитория</label>
-                    <input type="text" class="input-field" id="githubOwner" placeholder="ваш-username">
+                    <label class="input-label">Владелец</label>
+                    <input type="text" class="input-field" id="githubOwner" placeholder="username">
                 </div>
             </div>
             <div class="config-section">
                 <div class="input-group">
-                    <label class="input-label">Название репозитория</label>
-                    <input type="text" class="input-field" id="githubRepo" placeholder="game-codes">
+                    <label class="input-label">Репозиторий</label>
+                    <input type="text" class="input-field" id="githubRepo" placeholder="repo-name">
                 </div>
             </div>
             <div class="config-section">
                 <div class="input-group">
-                    <label class="input-label">Personal Access Token</label>
-                    <input type="password" class="input-field" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
+                    <label class="input-label">Token</label>
+                    <input type="password" class="input-field" id="githubToken" placeholder="ghp_xxx">
                 </div>
             </div>
             <div class="modal-actions">
@@ -689,43 +560,61 @@
                     <div class="panel-title-icon">✨</div>
                     Редактор кодов
                 </div>
-                <button class="btn btn-secondary" onclick="openConfigModal()" style="flex: 0; padding: 10px 16px;">
-                    ⚙️ Настройки
-                </button>
+                <button class="btn btn-secondary" onclick="openConfigModal()" style="flex:0;padding:10px 16px;">⚙️</button>
             </div>
 
             <div class="editor-content">
                 <div class="input-group">
                     <label class="input-label">Название кода</label>
-                    <input type="text" class="input-field" id="codeName" placeholder="MYCODE2024" maxlength="30">
+                    <input type="text" class="input-field" id="codeName" placeholder="MYCODE2024">
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">Шаблоны</label>
-                    <div class="template-buttons">
-                        <button class="template-btn" onclick="insertBadgeTemplate()">
-                            🏆 Бейдж
+                    <label class="input-label">Пресет</label>
+                    <div class="preset-buttons">
+                        <button class="preset-btn active" data-preset="coins" onclick="selectPreset('coins')">
+                            <span class="preset-btn-icon">🪙</span>
+                            Монеты
                         </button>
-                        <button class="template-btn" onclick="insertCoinsTemplate()">
-                            🪙 Монеты
+                        <button class="preset-btn" data-preset="badge" onclick="selectPreset('badge')">
+                            <span class="preset-btn-icon">🏆</span>
+                            Бейдж
+                        </button>
+                        <button class="preset-btn" data-preset="callback" onclick="selectPreset('callback')">
+                            <span class="preset-btn-icon">⚡</span>
+                            Каллбек
                         </button>
                     </div>
                 </div>
 
-                <div class="input-group" style="flex: 1; display: flex; flex-direction: column;">
-                    <label class="input-label">Код функции</label>
-                    <div class="editor-container">
-                        <div id="monaco-editor"></div>
+                <div class="preset-fields active" id="coinsFields">
+                    <div class="input-group">
+                        <label class="input-label">Количество монет</label>
+                        <input type="number" class="input-field" id="coinsAmount" placeholder="1000" min="1">
+                    </div>
+                </div>
+
+                <div class="preset-fields" id="badgeFields">
+                    <div class="input-group">
+                        <label class="input-label">ID бейджа</label>
+                        <input type="number" class="input-field" id="badgeId" placeholder="123456789">
+                    </div>
+                </div>
+
+                <div class="preset-fields" id="callbackFields">
+                    <div class="input-group">
+                        <label class="input-label">Функция (Lua)</label>
+                        <div class="callback-editor">
+                            <div id="monaco-editor"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-secondary" onclick="clearForm()">
-                    🔄 Очистить
-                </button>
+                <button class="btn btn-secondary" onclick="clearForm()">🔄 Очистить</button>
                 <button class="btn btn-primary" id="saveBtn" onclick="saveCode()">
-                    <span class="btn-text">💾 Сохранить код</span>
+                    <span class="btn-text">💾 Сохранить</span>
                     <div class="spinner"></div>
                 </button>
             </div>
@@ -743,8 +632,7 @@
             <div class="codes-list" id="codesList">
                 <div class="empty-state">
                     <div class="empty-state-icon">📭</div>
-                    <div class="empty-state-title">Пока нет кодов</div>
-                    <div class="empty-state-text">Создайте первый код в редакторе</div>
+                    <div class="empty-state-title">Нет кодов</div>
                 </div>
             </div>
 
@@ -753,9 +641,7 @@
                     <div class="status-dot"></div>
                     <span>Подключено</span>
                 </div>
-                <button class="btn btn-secondary" onclick="refreshCodes()" style="flex: 0; padding: 12px 20px;">
-                    🔄 Обновить
-                </button>
+                <button class="btn btn-secondary" onclick="fetchCodes()" style="flex:0;padding:12px 20px;">🔄</button>
             </div>
         </div>
     </div>
@@ -763,437 +649,268 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
     
     <script>
-        let githubConfig = {
-            owner: localStorage.getItem('github_owner') || '',
-            repo: localStorage.getItem('github_repo') || '',
-            token: localStorage.getItem('github_token') || '',
-            path: 'codes.lua',
+        let config = {
+            owner: localStorage.getItem('gh_owner') || '',
+            repo: localStorage.getItem('gh_repo') || '',
+            token: localStorage.getItem('gh_token') || '',
+            path: 'codes.json',
             branch: 'main'
         };
 
-        let codesData = {};
-        let currentFileSha = null;
-        let selectedCodeToDelete = null;
+        let codes = {};
+        let fileSha = null;
+        let selectedPreset = 'coins';
+        let deleteTarget = null;
         let monacoEditor = null;
-        let rawFileContent = '';
 
-        const badgeTemplate = `return function(Player:Player)
-	local playerData = Player:FindFirstChild("PlayerData")
-	if playerData then
-		require(game.ReplicatedStorage.Modules.BadgeAwarder).AwardPlayer(Player, 123456789)
-	end
-end`;
-
-        const coinsTemplate = `return function(Player:Player)
-	local playerData = Player:FindFirstChild("PlayerData")
-	if playerData then
-		local coins = playerData:FindFirstChild("Coins")
-		if coins then
-			coins.Value = coins.Value + 1000
-		end
-	end
+        const defaultCallback = `function(Player)
+    local playerData = Player:FindFirstChild("PlayerData")
+    if playerData then
+        -- Ваш код здесь
+    end
 end`;
 
         require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
 
-        require(['vs/editor/editor.main'], function () {
+        require(['vs/editor/editor.main'], function() {
             monaco.languages.register({ id: 'lua' });
 
-            monaco.languages.setMonarchTokensProvider('lua', {
-                keywords: [
-                    'and', 'break', 'do', 'else', 'elseif', 'end', 'false', 'for', 'function',
-                    'if', 'in', 'local', 'nil', 'not', 'or', 'repeat', 'return', 'then',
-                    'true', 'until', 'while'
-                ],
-                builtins: [
-                    'print', 'warn', 'error', 'require', 'game', 'workspace', 'script',
-                    'Instance', 'Vector3', 'CFrame', 'Color3', 'UDim2', 'Enum',
-                    'wait', 'spawn', 'delay', 'pcall', 'xpcall', 'typeof', 'type',
-                    'pairs', 'ipairs', 'next', 'select', 'tonumber', 'tostring',
-                    'math', 'string', 'table', 'os', 'Player'
-                ],
-                tokenizer: {
-                    root: [
-                        [/--\[\[/, 'comment', '@comment'],
-                        [/--.*$/, 'comment'],
-                        [/"([^"\\]|\\.)*$/, 'string.invalid'],
-                        [/'([^'\\]|\\.)*$/, 'string.invalid'],
-                        [/"/, 'string', '@string_double'],
-                        [/'/, 'string', '@string_single'],
-                        [/\d+(\.\d+)?/, 'number'],
-                        [/[a-zA-Z_]\w*/, {
-                            cases: {
-                                '@keywords': 'keyword',
-                                '@builtins': 'type.identifier',
-                                '@default': 'identifier'
-                            }
-                        }],
-                        [/[{}()\[\]]/, '@brackets'],
-                        [/:/, 'delimiter'],
-                        [/\./, 'delimiter'],
-                    ],
-                    comment: [
-                        [/[^\]]+/, 'comment'],
-                        [/\]\]/, 'comment', '@pop'],
-                        [/./, 'comment']
-                    ],
-                    string_double: [
-                        [/[^\\"]+/, 'string'],
-                        [/\\./, 'string.escape'],
-                        [/"/, 'string', '@pop']
-                    ],
-                    string_single: [
-                        [/[^\\']+/, 'string'],
-                        [/\\./, 'string.escape'],
-                        [/'/, 'string', '@pop']
-                    ]
-                }
-            });
-
-            monaco.editor.defineTheme('roblox-dark', {
+            monaco.editor.defineTheme('dark', {
                 base: 'vs-dark',
                 inherit: true,
                 rules: [
                     { token: 'keyword', foreground: 'F97583', fontStyle: 'bold' },
-                    { token: 'type.identifier', foreground: '79B8FF' },
                     { token: 'string', foreground: '9ECBFF' },
                     { token: 'number', foreground: 'F8C555' },
                     { token: 'comment', foreground: '6A737D', fontStyle: 'italic' },
                 ],
-                colors: {
-                    'editor.background': '#1E1E1E',
-                    'editor.foreground': '#E1E4E8',
-                    'editorLineNumber.foreground': '#444D56',
-                    'editor.selectionBackground': '#3392FF44',
-                    'editor.lineHighlightBackground': '#2B2B2B',
-                }
+                colors: { 'editor.background': '#1E1E1E' }
             });
 
             monacoEditor = monaco.editor.create(document.getElementById('monaco-editor'), {
-                value: coinsTemplate,
+                value: defaultCallback,
                 language: 'lua',
-                theme: 'roblox-dark',
+                theme: 'dark',
                 fontSize: 14,
-                fontFamily: "'SF Mono', 'Fira Code', 'Consolas', monospace",
+                fontFamily: "'SF Mono', monospace",
                 minimap: { enabled: false },
                 scrollBeyondLastLine: false,
-                lineNumbers: 'on',
                 automaticLayout: true,
                 tabSize: 4,
-                wordWrap: 'on',
-                padding: { top: 16, bottom: 16 }
-            });
-
-            monaco.languages.registerCompletionItemProvider('lua', {
-                provideCompletionItems: () => {
-                    const suggestions = [
-                        { label: 'Player', kind: monaco.languages.CompletionItemKind.Variable, insertText: 'Player', detail: 'Игрок' },
-                        { label: 'PlayerData', kind: monaco.languages.CompletionItemKind.Variable, insertText: 'Player:FindFirstChild("PlayerData")', detail: 'Данные игрока' },
-                        { label: 'Coins', kind: monaco.languages.CompletionItemKind.Property, insertText: 'playerData:FindFirstChild("Coins")', detail: 'Монеты' },
-                        { label: 'FindFirstChild', kind: monaco.languages.CompletionItemKind.Method, insertText: 'FindFirstChild("${1:name}")', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet },
-                        { label: 'require', kind: monaco.languages.CompletionItemKind.Function, insertText: 'require(${1:module})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet },
-                        { label: 'BadgeAwarder', kind: monaco.languages.CompletionItemKind.Module, insertText: 'require(game.ReplicatedStorage.Modules.BadgeAwarder).AwardPlayer(Player, ${1:badgeId})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet },
-                    ];
-                    return { suggestions };
-                }
+                padding: { top: 12, bottom: 12 }
             });
         });
 
-        function insertBadgeTemplate() {
-            if (monacoEditor) {
-                monacoEditor.setValue(badgeTemplate);
-            }
+        function showToast(type, title, msg) {
+            const c = document.getElementById('toastContainer');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><div><div style="font-weight:600">${title}</div><div style="font-size:13px;color:#86868b">${msg}</div></div>`;
+            c.appendChild(t);
+            setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 400); }, 3500);
         }
 
-        function insertCoinsTemplate() {
-            if (monacoEditor) {
-                monacoEditor.setValue(coinsTemplate);
-            }
-        }
-
-        function showToast(type, title, message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            const icons = { success: '✅', error: '❌' };
-            
-            toast.innerHTML = `
-                <span class="toast-icon">${icons[type]}</span>
-                <div class="toast-content">
-                    <div class="toast-title">${title}</div>
-                    <div class="toast-message">${message}</div>
-                </div>
-            `;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add('removing');
-                setTimeout(() => toast.remove(), 400);
-            }, 4000);
-        }
-
-        function parseLuaCodes(content) {
-            const codes = {};
-            rawFileContent = content;
-            
-            const regex = /\['([^']+)'\]\s*=\s*function\s*\([^)]*\)/g;
-            let match;
-            
-            while ((match = regex.exec(content)) !== null) {
-                codes[match[1]] = true;
-            }
-            
-            return codes;
-        }
-
-        function generateLuaFile() {
-            let content = 'return {\n';
-            const entries = Object.entries(codesData);
-            
-            entries.forEach(([name, code], index) => {
-                content += `\t['${name}'] = ${code}`;
-                if (index < entries.length - 1) {
-                    content += ',';
-                }
-                content += '\n\n';
-            });
-            
-            content += '}\n';
-            return content;
+        function selectPreset(preset) {
+            selectedPreset = preset;
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.preset === preset));
+            document.querySelectorAll('.preset-fields').forEach(f => f.classList.remove('active'));
+            document.getElementById(preset + 'Fields').classList.add('active');
         }
 
         async function fetchCodes() {
-            if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) {
+            if (!config.owner || !config.repo || !config.token) {
                 updateStatus(false);
-                return null;
-            }
-            
-            try {
-                const response = await fetch(
-                    `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${githubConfig.path}?ref=${githubConfig.branch}`,
-                    {
-                        headers: {
-                            'Authorization': `token ${githubConfig.token}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    }
-                );
-                
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        codesData = {};
-                        currentFileSha = null;
-                        updateStatus(true);
-                        return codesData;
-                    }
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                
-                const data = await response.json();
-                currentFileSha = data.sha;
-                
-                const content = decodeURIComponent(escape(atob(data.content)));
-                rawFileContent = content;
-                
-                codesData = {};
-                const codeBlocks = content.match(/\['([^']+)'\]\s*=\s*function[\s\S]*?end(?=\s*,|\s*})/g);
-                
-                if (codeBlocks) {
-                    codeBlocks.forEach(block => {
-                        const nameMatch = block.match(/\['([^']+)'\]/);
-                        if (nameMatch) {
-                            const funcMatch = block.match(/=\s*(function[\s\S]*?end)/);
-                            if (funcMatch) {
-                                codesData[nameMatch[1]] = funcMatch[1];
-                            }
-                        }
-                    });
-                }
-                
-                updateStatus(true);
-                renderCodesList();
-                return codesData;
-                
-            } catch (error) {
-                console.error('Ошибка загрузки:', error);
-                updateStatus(false);
-                showToast('error', 'Ошибка подключения', 'Не удалось загрузить коды с GitHub');
-                return null;
-            }
-        }
-
-        async function saveCodesToGithub() {
-            if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) {
-                showToast('error', 'Не настроено', 'Сначала настройте подключение к GitHub');
-                openConfigModal();
-                return false;
-            }
-            
-            try {
-                const luaContent = generateLuaFile();
-                const content = btoa(unescape(encodeURIComponent(luaContent)));
-                
-                const body = {
-                    message: `Обновление codes.lua - ${new Date().toLocaleString('ru-RU')}`,
-                    content: content,
-                    branch: githubConfig.branch
-                };
-                
-                if (currentFileSha) {
-                    body.sha = currentFileSha;
-                }
-                
-                const response = await fetch(
-                    `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${githubConfig.path}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${githubConfig.token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(body)
-                    }
-                );
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || `HTTP ${response.status}`);
-                }
-                
-                const data = await response.json();
-                currentFileSha = data.content.sha;
-                
-                return true;
-                
-            } catch (error) {
-                console.error('Ошибка сохранения:', error);
-                showToast('error', 'Ошибка сохранения', error.message);
-                return false;
-            }
-        }
-
-        function renderCodesList() {
-            const container = document.getElementById('codesList');
-            const codes = Object.keys(codesData);
-            
-            document.getElementById('codesCount').textContent = codes.length;
-            
-            if (codes.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <div class="empty-state-title">Пока нет кодов</div>
-                        <div class="empty-state-text">Создайте первый код в редакторе</div>
-                    </div>
-                `;
                 return;
             }
-            
-            container.innerHTML = codes.map(name => `
-                <div class="code-card" onclick="selectCode('${name}')">
-                    <div class="code-card-header">
-                        <span class="code-name">${name}</span>
+
+            try {
+                const r = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}`, {
+                    headers: { 'Authorization': `Bearer ${config.token}` }
+                });
+
+                if (r.status === 404) {
+                    codes = {};
+                    fileSha = null;
+                    updateStatus(true);
+                    renderList();
+                    showToast('success', 'Готово', 'Файл будет создан при сохранении');
+                    return;
+                }
+
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+
+                const d = await r.json();
+                fileSha = d.sha;
+                
+                const content = atob(d.content);
+                codes = JSON.parse(content);
+                
+                updateStatus(true);
+                renderList();
+                showToast('success', 'Загружено', `${Object.keys(codes).length} кодов`);
+            } catch (e) {
+                updateStatus(false);
+                showToast('error', 'Ошибка', e.message);
+            }
+        }
+
+        async function saveCodes() {
+            try {
+                const jsonContent = JSON.stringify(codes, null, 4);
+                const body = {
+                    message: 'Update codes.json',
+                    content: btoa(unescape(encodeURIComponent(jsonContent))),
+                    branch: config.branch
+                };
+                if (fileSha) body.sha = fileSha;
+
+                const r = await fetch(`https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${config.token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (!r.ok) {
+                    const err = await r.json();
+                    throw new Error(err.message);
+                }
+
+                fileSha = (await r.json()).content.sha;
+                return true;
+            } catch (e) {
+                showToast('error', 'Ошибка сохранения', e.message);
+                return false;
+            }
+        }
+
+        function renderList() {
+            const c = document.getElementById('codesList');
+            const keys = Object.keys(codes);
+            document.getElementById('codesCount').textContent = keys.length;
+
+            if (!keys.length) {
+                c.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-title">Нет кодов</div></div>`;
+                return;
+            }
+
+            c.innerHTML = keys.map(name => {
+                const d = codes[name];
+                let details = '';
+                let type = d.type || 'callback';
+                
+                if (type === 'coins') details = `+${d.amount} монет`;
+                else if (type === 'badge') details = `Badge: ${d.badgeId}`;
+                else details = 'Кастомная функция';
+
+                return `
+                    <div class="code-card" onclick="selectCode('${name}')">
+                        <div class="code-card-header">
+                            <span class="code-name">${name}</span>
+                            <span class="code-type ${type}">${type}</span>
+                        </div>
+                        <div class="code-details">${details}</div>
+                        <div class="code-actions">
+                            <button class="delete-btn" onclick="event.stopPropagation();openDeleteModal('${name}')">✕</button>
+                        </div>
                     </div>
-                    <div class="code-actions">
-                        <button class="delete-btn" onclick="event.stopPropagation(); openDeleteModal('${name}')">
-                            ✕
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function selectCode(name) {
-            document.querySelectorAll('.code-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            event.currentTarget.classList.add('selected');
-            
             document.getElementById('codeName').value = name;
+            const d = codes[name];
             
-            if (codesData[name] && monacoEditor) {
-                monacoEditor.setValue(codesData[name]);
+            if (d.type === 'coins') {
+                selectPreset('coins');
+                setTimeout(() => document.getElementById('coinsAmount').value = d.amount, 50);
+            } else if (d.type === 'badge') {
+                selectPreset('badge');
+                setTimeout(() => document.getElementById('badgeId').value = d.badgeId, 50);
+            } else if (d.callback) {
+                selectPreset('callback');
+                setTimeout(() => monacoEditor && monacoEditor.setValue(d.callback), 50);
             }
         }
 
         async function saveCode() {
             const name = document.getElementById('codeName').value.trim().toUpperCase();
-            
-            if (!name) {
-                showToast('error', 'Ошибка', 'Введите название кода');
+            if (!name || !/^[A-Z0-9_]+$/.test(name)) {
+                showToast('error', 'Ошибка', 'Неверное название кода');
                 return;
             }
-            
-            if (!/^[A-Z0-9_]+$/.test(name)) {
-                showToast('error', 'Ошибка', 'Название может содержать только буквы, цифры и _');
-                return;
+
+            let data = {};
+
+            if (selectedPreset === 'coins') {
+                const amt = parseInt(document.getElementById('coinsAmount').value);
+                if (!amt || amt < 1) {
+                    showToast('error', 'Ошибка', 'Введите количество монет');
+                    return;
+                }
+                data = { type: 'coins', amount: amt };
+
+            } else if (selectedPreset === 'badge') {
+                const id = document.getElementById('badgeId').value.trim();
+                if (!id) {
+                    showToast('error', 'Ошибка', 'Введите ID бейджа');
+                    return;
+                }
+                data = { type: 'badge', badgeId: parseInt(id) };
+
+            } else if (selectedPreset === 'callback') {
+                const cb = monacoEditor ? monacoEditor.getValue().trim() : '';
+                if (!cb) {
+                    showToast('error', 'Ошибка', 'Введите функцию');
+                    return;
+                }
+                data = { type: 'callback', callback: cb };
             }
-            
-            let code = monacoEditor ? monacoEditor.getValue() : '';
-            
-            if (!code.trim()) {
-                showToast('error', 'Ошибка', 'Введите код функции');
-                return;
-            }
-            
-            if (code.startsWith('return ')) {
-                code = code.substring(7);
-            }
-            
-            codesData[name] = code;
-            
+
+            codes[name] = data;
+
             const btn = document.getElementById('saveBtn');
             btn.classList.add('loading');
-            
-            const success = await saveCodesToGithub();
-            
+            const ok = await saveCodes();
             btn.classList.remove('loading');
-            
-            if (success) {
-                showToast('success', 'Сохранено!', `Код ${name} добавлен в codes.lua`);
-                renderCodesList();
+
+            if (ok) {
+                showToast('success', 'Сохранено!', name);
+                renderList();
                 clearForm();
             }
         }
 
         function openDeleteModal(name) {
-            selectedCodeToDelete = name;
+            deleteTarget = name;
             document.getElementById('deleteCodeName').textContent = name;
             document.getElementById('deleteModal').classList.add('active');
         }
 
         function closeDeleteModal() {
             document.getElementById('deleteModal').classList.remove('active');
-            selectedCodeToDelete = null;
         }
 
         async function confirmDelete() {
-            if (!selectedCodeToDelete) return;
-            
-            delete codesData[selectedCodeToDelete];
+            if (!deleteTarget) return;
+            delete codes[deleteTarget];
             
             const btn = document.getElementById('confirmDeleteBtn');
             btn.classList.add('loading');
-            
-            const success = await saveCodesToGithub();
-            
+            const ok = await saveCodes();
             btn.classList.remove('loading');
             closeDeleteModal();
             
-            if (success) {
-                showToast('success', 'Удалено', `Код ${selectedCodeToDelete} удалён`);
-                renderCodesList();
+            if (ok) {
+                showToast('success', 'Удалено', deleteTarget);
+                renderList();
             }
         }
 
         function openConfigModal() {
-            document.getElementById('githubOwner').value = githubConfig.owner;
-            document.getElementById('githubRepo').value = githubConfig.repo;
-            document.getElementById('githubToken').value = githubConfig.token;
+            document.getElementById('githubOwner').value = config.owner;
+            document.getElementById('githubRepo').value = config.repo;
+            document.getElementById('githubToken').value = config.token;
             document.getElementById('configModal').classList.add('active');
         }
 
@@ -1202,53 +919,36 @@ end`;
         }
 
         function saveConfig() {
-            githubConfig.owner = document.getElementById('githubOwner').value.trim();
-            githubConfig.repo = document.getElementById('githubRepo').value.trim();
-            githubConfig.token = document.getElementById('githubToken').value.trim();
-            
-            localStorage.setItem('github_owner', githubConfig.owner);
-            localStorage.setItem('github_repo', githubConfig.repo);
-            localStorage.setItem('github_token', githubConfig.token);
-            
+            config.owner = document.getElementById('githubOwner').value.trim();
+            config.repo = document.getElementById('githubRepo').value.trim();
+            config.token = document.getElementById('githubToken').value.trim();
+
+            localStorage.setItem('gh_owner', config.owner);
+            localStorage.setItem('gh_repo', config.repo);
+            localStorage.setItem('gh_token', config.token);
+
             closeConfigModal();
-            showToast('success', 'Сохранено', 'Настройки GitHub сохранены');
-            
+            showToast('success', 'Сохранено', 'Настройки применены');
             fetchCodes();
         }
 
-        function updateStatus(connected) {
-            const indicator = document.getElementById('statusIndicator');
-            if (connected) {
-                indicator.className = 'status-indicator';
-                indicator.innerHTML = '<div class="status-dot"></div><span>Подключено</span>';
-            } else {
-                indicator.className = 'status-indicator error';
-                indicator.innerHTML = '<div class="status-dot"></div><span>Отключено</span>';
-            }
+        function updateStatus(ok) {
+            const s = document.getElementById('statusIndicator');
+            s.className = ok ? 'status-indicator' : 'status-indicator error';
+            s.innerHTML = `<div class="status-dot"></div><span>${ok ? 'Подключено' : 'Отключено'}</span>`;
         }
 
         function clearForm() {
             document.getElementById('codeName').value = '';
-            if (monacoEditor) {
-                monacoEditor.setValue(coinsTemplate);
-            }
-            document.querySelectorAll('.code-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-        }
-
-        function refreshCodes() {
-            showToast('success', 'Обновление...', 'Загрузка кодов с GitHub');
-            fetchCodes();
+            document.getElementById('coinsAmount').value = '';
+            document.getElementById('badgeId').value = '';
+            if (monacoEditor) monacoEditor.setValue(defaultCallback);
+            selectPreset('coins');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (githubConfig.owner && githubConfig.repo && githubConfig.token) {
-                fetchCodes();
-            } else {
-                updateStatus(false);
-                setTimeout(openConfigModal, 500);
-            }
+            if (config.owner && config.repo && config.token) fetchCodes();
+            else { updateStatus(false); setTimeout(openConfigModal, 500); }
         });
     </script>
 </body>
